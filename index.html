@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول حراسة الامتحانات</title>
+    <meta name="description" content="تطبيق إدارة وتوليد جدول حراسة الامتحانات للمؤسسات التعليمية">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <header class="top-navbar" id="top-navbar">
+        <div class="sidebar-header">
+            <div class="logo-icon">🎓</div>
+            <h1 class="logo-text">جدول الحراسة</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-page="institution" id="nav-institution">
+                <span class="nav-icon">🏫</span>
+                <span class="nav-label">المؤسسة</span>
+            </button>
+            <button class="nav-btn" data-page="rooms" id="nav-rooms">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-label">الحجرات والأفواج</span>
+            </button>
+            <button class="nav-btn" data-page="teachers" id="nav-teachers">
+                <span class="nav-icon">👨‍🏫</span>
+                <span class="nav-label">الأساتذة والمواد</span>
+            </button>
+            <button class="nav-btn" data-page="exams" id="nav-exams">
+                <span class="nav-icon">🕒</span>
+                <span class="nav-label">إعداد الامتحانات</span>
+            </button>
+            <button class="nav-btn" data-page="exemptions" id="nav-exemptions">
+                <span class="nav-icon">📅</span>
+                <span class="nav-label">إعفاء الأساتذة</span>
+            </button>
+            <button class="nav-btn" data-page="schedule" id="nav-schedule">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">جدول الحراسة</span>
+            </button>
+            <button class="nav-btn" data-page="cv" id="nav-cv">
+                <span class="nav-icon">📄</span>
+                <span class="nav-label">المصمم</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header" id="mobile-header">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h1>جدول الحراسة</h1>
+    </header>
+
+    <!-- Update Notification Banner -->
+    <div id="update-banner" class="update-banner" style="display: none;">
+        <div class="update-banner-content">
+            <span class="update-icon">🚀</span>
+            <div class="update-text">
+                <strong>تحديث جديد متاح!</strong>
+                <span id="update-version-label">V3.9.0</span> جاهز للتحميل الآن.
+            </div>
+            <div class="update-actions">
+                <button class="btn btn-sm btn-white" onclick="showUpdateModal()">عرض التفاصيل</button>
+                <button class="update-close" onclick="closeUpdateBanner()">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+
+        <!-- Page: Institution Info -->
+        <section class="page active" id="page-institution">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">🏫</span>
+                    معلومات المؤسسة
+                </h2>
+                <p class="page-subtitle">أدخل المعلومات الأساسية للمؤسسة التربوية واستورد ملفات الرقمنة</p>
+            </div>
+
+            <!-- Step 1: Institution Info -->
+            <div class="card fade-in inst-step-card card-compact">
+                <div class="inst-step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-info">
+                        <h3>📋 معلومات المؤسسة والامتحان</h3>
+                        <p>أدخل البيانات الأساسية المعتمدة في التقارير والجداول</p>
+                    </div>
+                </div>
+                <form id="institution-form" class="inst-form-layout">
+            </div>
+            <div class="inst-form-row">
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="inst-level-select">� الطور التعليمي</label>
+                    <select id="inst-level-select" class="form-control">
+                        <option value="">-- اختر الطور التعليمي --</option>
+                        <option value="primary">التعليم الابتدائي</option>
+                        <option value="middle">التعليم المتوسط</option>
+                        <option value="high">التعليم الثانوي</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inst-form-row inst-form-3col">
+                <div class="form-group">
+                    <label for="inst-name">🏫 اسم المؤسسة الكامل</label>
+                    <input type="text" id="inst-name" placeholder="مثال: متوسطة الأمير عبد القادر - الجزائر" required>
+                </div>
+                <div class="form-group">
+                    <label for="inst-director">👤 السيد(ة) المدير(ة)</label>
+                    <input type="text" id="inst-director" placeholder="الاسم واللقب">
+                </div>
+                <div class="form-group">
+                    <label for="inst-email">📧 إيميل المؤسسة (للتنبيهات)</label>
+                    <input type="email" id="inst-email" placeholder="example@email.com">
+                </div>
+            </div>
+            <div class="inst-form-row inst-form-3col">
+                <div class="form-group">
+                    <label for="inst-wilaya">� الولاية</label>
+                    <input type="text" id="inst-wilaya" placeholder="مثال: 16 - الجزائر">
+                </div>
+                <div class="form-group">
+                    <label for="inst-city">�️ البلدية</label>
+                    <input type="text" id="inst-city" placeholder="مثال: باب الوادي">
+                </div>
+                <div class="form-group">
+                    <label for="inst-year">📅 الموسم الدراسي</label>
+                    <input type="text" id="inst-year" placeholder="مثال: 2024/2025">
+                </div>
+            </div>
+
+            <div class="inst-form-row inst-form-3col">
+                <div class="form-group">
+                    <label for="inst-exam-type">📝 نوع الدورة / الامتحان</label>
+                    <select id="inst-exam-type">
+                        <option value="اختبارات الفصل الأول">اختبارات الفصل الأول</option>
+                        <option value="اختبارات الفصل الثاني">اختبارات الفصل الثاني</option>
+                        <option value="اختبارات الفصل الثالث">اختبارات الفصل الثالث</option>
+                        <option value="امتحان تجريبي">امتحان تجريبي</option>
+                        <option value="امتحان شهادة البكالوريا التجريبي">امتحان شهادة البكالوريا التجريبي</option>
+                        <option value="امتحان شهادة التعليم المتوسط التجريبي">امتحان شهادة التعليم المتوسط التجريبي
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inst-start-date"> تاريخ انطلاق الاختبارات</label>
+                    <input type="date" id="inst-start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="inst-end-date"> تاريخ اختتام الاختبارات</label>
+                    <input type="date" id="inst-end-date" required>
+                </div>
+            </div>
+            <div class="inst-form-row" style="justify-content: center; padding-top: 10px;">
+                <button type="submit" class="btn btn-primary btn-lg inst-save-btn">
+                    <span>💾</span> حفظ التغييرات والبدء
+                </button>
+            </div>
+            </form>
+            </div>
+
+            <!-- Step 2: Digitization Import -->
+            <div class="card fade-in inst-step-card card-compact" style="animation-delay: 0.1s;">
+                <div class="inst-step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-info">
+                        <h3>📂 استيراد ملفات الرقمنة</h3>
+                        <p>يجب استيراد الملفين لتتمكن من الانتقال للصفحات الأخرى</p>
+                    </div>
+                </div>
+                <div class="import-cards-grid"
+                    style="padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="import-file-card" id="import-students-card">
+                        <div class="import-file-icon">🎓</div>
+                        <h4>ملف التلاميذ</h4>
+                        <p class="import-file-desc">استخراج الأفواج التربوية وإحصائيات التلاميذ</p>
+                        <input type="file" id="students-excel-upload" accept=".xlsx,.xls" style="display:none;">
+                        <button class="btn btn-primary import-file-btn" id="import-students-btn"
+                            onclick="document.getElementById('students-excel-upload').click()">
+                            <span>📥</span> اختر ملف التلاميذ
+                        </button>
+                        <div class="import-status" id="import-students-status">
+                            <span class="status-icon">⏳</span>
+                            <span class="status-text">لم يتم الاستيراد بعد</span>
+                        </div>
+                        <div class="import-stats" id="import-students-stats" style="display: none;"></div>
+                    </div>
+                    <div class="import-file-card" id="import-teachers-card">
+                        <div class="import-file-icon">👨‍🏫</div>
+                        <h4>ملف الأساتذة والمواد</h4>
+                        <p class="import-file-desc">استخراج قائمة الأساتذة ومواد التدريس</p>
+                        <input type="file" id="teachers-excel-upload" accept=".xlsx,.xls" style="display:none;">
+                        <button class="btn btn-secondary import-file-btn" id="import-teachers-btn"
+                            onclick="document.getElementById('teachers-excel-upload').click()">
+                            <span>📥</span> اختر ملف الأساتذة
+                        </button>
+                        <div class="import-status" id="import-teachers-status">
+                            <span class="status-icon">⏳</span>
+                            <span class="status-text">لم يتم الاستيراد بعد</span>
+                        </div>
+                        <div class="import-stats" id="import-teachers-stats" style="display: none;"></div>
+                    </div>
+                </div>
+                <div id="import-summary-bar" class="import-summary-bar" style="display: none;">
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-groups-count">0</span>
+                        <span class="summary-label">قسم</span>
+                    </div>
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-students-count">0</span>
+                        <span class="summary-label">تلميذ</span>
+                    </div>
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-males-count">0</span>
+                        <span class="summary-label">ذكور</span>
+                    </div>
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-females-count">0</span>
+                        <span class="summary-label">إناث</span>
+                    </div>
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-teachers-count">0</span>
+                        <span class="summary-label">أستاذ</span>
+                    </div>
+                    <div class="import-summary-item">
+                        <span class="summary-value" id="summary-subjects-count">0</span>
+                        <span class="summary-label">مادة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Data Management & Updates -->
+            <div class="card fade-in inst-step-card card-compact" style="animation-delay: 0.2s;">
+                <div class="inst-step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-info"
+                        style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <div>
+                            <h3>⚙️ الصيانة والتحديثات السريعة</h3>
+                            <p>إدارة البيانات، التحديثات المباشرة، وحل المشكلات</p>
+                        </div>
+                        <div id="hot-update-badge"
+                            style="background: var(--success-50); color: var(--success); padding: 5px 12px; border-radius: 20px; font-weight: 800; font-size: 0.75rem; border: 1px solid var(--success-light); display: none;">
+                            ✨ تحديث جديد متاح!
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; padding: 15px;">
+                    <!-- Data Actions -->
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-right: 20px; border-right: 2px dashed var(--gray-200);">
+                        <button class="btn btn-secondary" id="export-data-btn" style="height: 45px;">
+                            <span>📤</span> تصدير قاعدة البيانات
+                        </button>
+                        <div style="position: relative;">
+                            <input type="file" id="import-data-upload" accept=".json" style="display: none;">
+                            <button class="btn btn-outline" id="import-data-btn"
+                                onclick="document.getElementById('import-data-upload').click()"
+                                style="width: 100%; height: 45px;">
+                                <span>📥</span> استيراد نسخة سابقة
+                            </button>
+                        </div>
+                        <button class="btn btn-danger" id="reset-all-btn" onclick="resetAllData()"
+                            style="grid-column: span 2; height: 45px; font-weight: 800;">
+                            <span>⚠️</span> تصفير شامل للنظام (حذف كل شيء)
+                        </button>
+                    </div>
+
+                    <!-- Hot Update Actions -->
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button class="btn btn-primary" id="hot-update-btn" onclick="checkForHotUpdate(true)"
+                            style="height: 45px; font-weight: 800; background: linear-gradient(to right, var(--primary), var(--primary-dark)); border: none; box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.2);">
+                            <span>🚀</span> البحث عن تحديثات سريعة
+                        </button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-outline btn-sm" onclick="restoreOriginalVersion()"
+                                style="flex: 1; border-color: var(--gray-300); color: var(--text-light); font-size: 0.75rem;">
+                                <span>⏪</span> استعادة النسخة الأصلية
+                            </button>
+                            <button class="btn btn-outline btn-sm"
+                                onclick="if(window.electronUpdater) window.electronUpdater.checkForUpdates();"
+                                style="flex: 1; border-color: var(--gray-300); color: var(--text-light); font-size: 0.75rem;">
+                                <span>🏢</span> تحديث البرنامج كاملاً
+                            </button>
+                        </div>
+                        <p style="font-size: 0.7rem; color: var(--text-light); text-align: center; margin: 0;">
+                            💡 التحديث السريع يقوم بتحميل الملفات الجديدة فقط دون إعادة التنصيب
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        </section>
+
+        <!-- Page: Rooms & Groups -->
+        <section class="page" id="page-rooms">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">🏢</span>
+                    الحجرات والمجموعات التربوية
+                </h2>
+                <p class="page-subtitle">قم بتسيير الحجرات وتقسيم الأقسام المستوردة لمجموعات للربط بينهما</p>
+            </div>
+
+            <div class="rooms-redesign-layout">
+
+                <div id="shift-config-container">
+                    <!-- Shift Configuration rendered here -->
+                </div>
+
+                <!-- NEW: Educational Groups (Tafwij) Management -->
+                <div class="card fade-in" style="margin-bottom: 20px;">
+                    <div class="card-header"
+                        style="background: var(--gray-50); display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 20px;">👥</span>
+                            <h3>تقسيم الأفواج التربوية (نظام التفويج)</h3>
+                        </div>
+                        <div class="header-actions">
+                            <span class="badge badge-outline">حدد عدد الأفواج (1 أو 2) لكل قسم تربوي مستورد</span>
+                        </div>
+                    </div>
+                    <div id="tafwij-table-container" style="padding: 15px; overflow-x: auto;">
+                        <!-- Groups table will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Row 2: Two Columns for Rooms and Linking -->
+                <div class="rooms-split-grid">
+                    <!-- Left: Rooms Management -->
+                    <div class="card fade-in">
+                        <div class="card-header"
+                            style="background: var(--gray-50); display: flex; justify-content: space-between; align-items: center;">
+                            <h3>🏫 تسيير الحجرات</h3>
+                            <button class="btn btn-primary btn-sm" id="set-rooms-all-btn">
+                                <span>✅</span> تطبيق
+                            </button>
+                        </div>
+                        <div style="padding: 20px;">
+                            <div class="room-setup-grid-modern">
+                                <div class="room-setup-item">
+                                    <label>القاعات العادية</label>
+                                    <input type="number" id="room-count-normal" value="0" min="0" class="form-control">
+                                </div>
+                                <div class="room-setup-item">
+                                    <label>المخابر</label>
+                                    <input type="number" id="room-count-lab" value="0" min="0" class="form-control">
+                                </div>
+                                <div class="room-setup-item">
+                                    <label>الورشات</label>
+                                    <input type="number" id="room-count-workshop" value="0" min="0"
+                                        class="form-control">
+                                </div>
+                                <div class="room-setup-item">
+                                    <label>المدرجات</label>
+                                    <input type="number" id="room-count-auditorium" value="0" min="0"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Linking Card -->
+                    <div class="card fade-in">
+                        <div class="card-header"
+                            style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <h3>🔗 ربط القاعات بالمجموعات</h3>
+                                <button class="btn btn-danger btn-xs" onclick="deleteAllRooms()">
+                                    <span>🗑️</span> مسح
+                                </button>
+                            </div>
+                        </div>
+                        <div id="rooms-linking-container" class="rooms-linking-grid-modern">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        </section>
+
+        <!-- Page: Teachers -->
+        <section class="page" id="page-teachers">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">👨‍🏫</span>
+                    الأساتذة والمواد
+                </h2>
+                <p class="page-subtitle">إدارة المواد التعليمية وقائمة الأساتذة</p>
+            </div>
+
+            <div class="dual-column-layout">
+                <!-- Left Column: Subjects -->
+                <div class="side-panel">
+                    <div class="card-header" style="margin-bottom: 5px; padding-bottom: 5px;">
+                        <h3>📚 المواد</h3>
+                    </div>
+                    <div style="padding: 5px; border-bottom: 1px solid var(--border-light);">
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <div class="input-with-icon">
+                                <span class="input-icon" style="font-size: 12px;">🔍</span>
+                                <input type="text" id="subject-search-input" placeholder="بحث..." class="form-control"
+                                    style="padding: 4px 24px 4px 8px; font-size: 12px; border-radius: 4px;"
+                                    oninput="filterSubjects(this.value)">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 4px;">
+                            <input type="text" id="new-subject-name" placeholder="مادة جديدة..." class="form-control"
+                                style="padding: 4px 8px; font-size: 12px; border-radius: 4px;">
+                            <button class="btn btn-primary" style="padding: 4px 8px; border-radius: 4px;"
+                                title="إضافة مادة" onclick="addNewSubject()">➕</button>
+                        </div>
+                    </div>
+                    <div id="subjects-list-panel" class="subjects-compact-list">
+                        <!-- Subjects will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Teachers -->
+                <div class="main-panel">
+                    <div class="card fade-in" id="teachers-list-container">
+                        <div class="card-header">
+                            <h3 id="selected-subject-title">مادة: الكل</h3>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <button class="btn btn-primary btn-sm" id="add-teacher-btn">➕ إضافة أستاذ</button>
+                                <span class="badge" id="teachers-count">0</span>
+                            </div>
+                        </div>
+
+                        <div
+                            style="padding: 10px; background: var(--gray-50); border-bottom: 1px solid var(--border); display:flex; gap:10px; align-items:center;">
+                            <span>🔍</span>
+                            <input type="text" id="teacher-search-input" placeholder="بحث عن أستاذ..."
+                                class="form-control" style="flex:1;" oninput="renderTeachersBySubject()">
+                            <button class="btn btn-danger btn-sm" onclick="deleteAllTeachers()">🗑️ حذف الكل</button>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table id="teachers-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">#</th>
+                                        <th>الاسم واللقب</th>
+                                        <th style="width: 120px;">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teachers-tbody">
+                                    <tr class="empty-row">
+                                        <td colspan="3">
+                                            <div class="empty-state">
+                                                <p>اختر مادة لعرض الأساتذة</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page: Exemptions -->
+        <section class="page" id="page-exemptions">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">📅</span>
+                    إعفاء الأساتذة
+                </h2>
+                <p class="page-subtitle">تحديد فترات الإعفاء (يوم كامل، صباحاً، أو مساءً)</p>
+            </div>
+
+            <div class="card fade-in card-compact">
+                <div class="card-header">
+                    <h3>🛡️ الربط والتحكم بالإعفاءات</h3>
+                </div>
+                <div style="padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label>إعفاء حسب المادة (يوم كامل):</label>
+                        <div style="display:flex; gap:10px; margin-top:5px;">
+                            <select id="exemption-subject-select" class="form-control" style="flex:1;">
+                                <option value="">-- اختر مادة --</option>
+                            </select>
+                            <select id="exemption-day-select" class="form-control" style="width:120px;">
+                                <!-- Will be populated with exam dates -->
+                            </select>
+                            <button class="btn btn-danger btn-sm" onclick="applySubjectExemption()">إعفاء</button>
+                        </div>
+                    </div>
+                    <div
+                        style="border-right: 1px solid var(--border); padding-right: 15px; display: flex; gap: 10px; align-items: center;">
+                        <button class="btn btn-primary w-100" onclick="autoExemptBySubject()"
+                            style="background:var(--success); border:none;">
+                            <span>🚀</span> الإعفاء الآلي (حسب المادة)
+                        </button>
+                        <button class="btn btn-danger w-100" onclick="deleteAllExemptions()">🗑️ مسح الكل</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in" id="exemptions-grid-card">
+                <div class="card-header">
+                    <h3>جدول الإعفاءات الفردية</h3>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <span class="unified-note">💡 انقر في الخانة للتبديل بين: (متاح / إعفاء كلي / صباحاً /
+                            مساءً)</span>
+                        <span class="badge" id="exemptions-count">0</span>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="exemptions-table" class="sticky-table exemptions-matrix">
+                        <thead id="exemptions-thead"></thead>
+                        <tbody id="exemptions-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page: Daily Exam Config -->
+        <section class="page" id="page-exams">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">🕒</span>
+                    إعداد الامتحانات (يومي)
+                </h2>
+                <p class="page-subtitle">قم بإضافة أيام الامتحانات وتحديد عدد القاعات المطلوبة لكل حصة</p>
+            </div>
+
+            <div class="card fade-in" style="margin-bottom: 20px;">
+                <div class="card-header"
+                    style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
+                    <div style="display:flex; gap:15px; align-items:center; flex-wrap: wrap;">
+                        <h3 style="margin-bottom: 0;">📅 أيام الامتحانات المبرمجة</h3>
+                        <span class="unified-note" style="margin: 0; padding: 4px 10px;">
+                            💡 يتم توليد أيام الامتحانات تلقائياً بناءً على تاريخ البداية والنهاية المحددين في صفحة
+                            معلومات المؤسسة.
+                        </span>
+                        <button class="btn btn-primary btn-sm" id="btn-autofill-bac" onclick="autoFillBac()"
+                            style="display:none; background:var(--primary); border:none;">
+                            <span>📋</span> تعبئة رزنامة البكالوريا
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btn-autofill-bem" onclick="autoFillBem()"
+                            style="display:none; background:var(--accent); border:none;">
+                            <span>📋</span> تعبئة رزنامة BEM
+                        </button>
+                    </div>
+                    <select id="daily-day-filter" class="form-control" style="width:200px; font-weight:bold;"
+                        onchange="filterDailyConfigs(this.value)">
+                        <option value="all">عرض جميع الأيام</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="daily-configs-container">
+                <!-- Daily dynamic tables rendered here -->
+            </div>
+
+            <!-- Removed redundant manual save button -->
+            <div class="form-actions mt-20" id="save-daily-action" style="display: none;">
+                <button class="btn btn-success btn-lg" onclick="saveAllDailyConfigs()">
+                    <span>💾</span> حفظ جميع الإعدادات اليومية
+                </button>
+            </div>
+        </section>
+
+        <!-- Page: Schedule -->
+        <section class="page" id="page-schedule">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <span class="title-icon">📋</span>
+                    جدول الحراسة
+                </h2>
+                <p class="page-subtitle">قم بتوليد جدول الحراسة التلقائي وطباعته</p>
+            </div>
+            <div class="card fade-in">
+                <!-- Consolidated Settings and Matrix -->
+                <div style="padding: 20px; background: white;">
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; padding: 15px; border: 1px solid var(--primary-100); border-radius: 12px; background: var(--primary-50);">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="font-weight: 800; color: var(--primary-dark);">👤 عدد الحراس في كل
+                                قاعة</label>
+                            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                <input type="number" id="global-guards-count" value="1" min="1" class="form-control"
+                                    style="width: 100px;">
+                                <button class="btn btn-primary btn-sm" onclick="applyGlobalGuards()"
+                                    style="font-weight: 700;">تطبيق على الكل</button>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="font-weight: 800; color: var(--primary-dark);">🛡️ عدد الاحتياط في كل
+                                فترة</label>
+                            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                <input type="number" id="global-reserves-count" value="2" min="0" class="form-control"
+                                    style="width: 100px;">
+                                <button class="btn btn-primary btn-sm" onclick="applyGlobalReserves()"
+                                    style="font-weight: 700;">تطبيق على الكل</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="guards-matrix-container">
+                        <!-- Guards Matrix table rendered here -->
+                    </div>
+                </div>
+                <div class="schedule-actions" style="padding: 20px; border-top: 1px solid var(--border-light);">
+
+                    <div class="action-buttons-group"
+                        style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center;">
+                        <button class="btn btn-primary btn-lg" id="generate-btn"
+                            style="min-width: 240px; font-weight: 800;">
+                            <span>⚡</span> توليد جدول الحراسة
+                        </button>
+                        <button class="btn btn-success btn-lg" id="export-excel-btn" disabled
+                            onclick="exportScheduleToExcel()" title="تصدير جدول الحراسة إلى ملف إكسل">
+                            <span>📊</span> تصدير Excel
+                        </button>
+
+                        <!-- Individual Print Buttons (Standardized IDs) -->
+                        <button class="btn btn-secondary btn-lg" id="print-main-btn" disabled
+                            onclick="triggerMainPrint()" style="min-width: 180px; font-weight: 700;">
+                            <span>🖨️</span> الجدول الإجمالي
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-teachers-btn" disabled
+                            style="min-width: 180px; font-weight: 700;">
+                            <span>👤</span> جداول الأساتذة
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-cross-btn" disabled
+                            style="min-width: 180px; font-weight: 700;">
+                            <span>✖️</span> الجدول التقاطعي
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-attendance-btn" disabled
+                            style="min-width: 180px; font-weight: 700;">
+                            <span>📝</span> محاضر الحضور
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-student-btn" disabled
+                            style="min-width: 180px; font-weight: 700;">
+                            <span>📚</span> جدول الاختبارات
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-dist-btn" disabled
+                            onclick="printDailyDistribution()" style="min-width: 180px; font-weight: 700;">
+                            <span>📍</span> توزيع القاعات
+                        </button>
+
+                        <button class="btn btn-secondary btn-lg" id="print-reserves-btn" disabled
+                            style="min-width: 180px; font-weight: 700;">
+                            <span>🛡️</span> قائمة الاحتياط
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Analysis Dashboard -->
+                <div id="pre-generation-analysis" class="analysis-dashboard"
+                    style="margin-top: 20px; padding: 20px; border-top: 1px solid var(--gray-100); background: var(--gray-50); border-radius: 12px; display: none;">
+                    <div class="card-header"
+                        style="padding: 0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <h3>📊 تحليل الاحتياجات وإحصائيات الفترة</h3>
+                        <div id="analysis-period-indicator"
+                            style="font-size: 13px; font-weight: 800; color: var(--primary);"></div>
+                    </div>
+
+                    <!-- Integrated Stats Row -->
+                    <div class="stats-row"
+                        style="margin-bottom: 25px; grid-template-columns: repeat(4, 1fr); border: none; padding: 0; box-shadow: none;">
+                        <div class="stat-card" style="background: white; border: 1px solid var(--primary-100);">
+                            <div class="stat-value" id="stat-teachers" style="color: var(--primary);">0</div>
+                            <div class="stat-label">أستاذ مسجل</div>
+                        </div>
+                        <div class="stat-card" style="background: white; border: 1px solid var(--primary-100);">
+                            <div class="stat-value" id="stat-rooms" style="color: var(--primary);">0</div>
+                            <div class="stat-label">قاعة في المؤسسة</div>
+                        </div>
+                        <div class="stat-card" style="background: white; border: 1px solid var(--primary-100);">
+                            <div class="stat-value" id="stat-sessions" style="color: var(--primary);">0</div>
+                            <div class="stat-label">حصة مبرمجة</div>
+                        </div>
+                        <div class="stat-card" style="background: white; border: 1px solid var(--primary-100);">
+                            <div class="stat-value" id="stat-guards-needed" style="color: var(--primary);">0</div>
+                            <div class="stat-label">إجمالي الحراسة</div>
+                        </div>
+                    </div>
+                    <div class="analysis-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                        <div class="stat-card mini"
+                            style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200);">
+                            <div class="stat-label"
+                                style="font-size: 12px; color: var(--text-light); margin-bottom: 5px;">إجمالي الحراسة
+                                المطلوبة</div>
+                            <div class="stat-value" id="analysis-total-guards"
+                                style="font-size: 20px; font-weight: 700; color: var(--primary);">0</div>
+                        </div>
+                        <div class="stat-card mini"
+                            style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200);">
+                            <div class="stat-label"
+                                style="font-size: 12px; color: var(--text-light); margin-bottom: 5px;">إجمالي الاحتياط
+                            </div>
+                            <div class="stat-value" id="analysis-total-reserves"
+                                style="font-size: 20px; font-weight: 700; color: var(--primary);">0</div>
+                        </div>
+                        <div class="stat-card mini"
+                            style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200);">
+                            <div class="stat-label"
+                                style="font-size: 12px; color: var(--text-light); margin-bottom: 5px;">مجموع الساعات
+                            </div>
+                            <div class="stat-value" id="analysis-total-hours"
+                                style="font-size: 20px; font-weight: 700; color: var(--primary);">0</div>
+                        </div>
+                        <div class="stat-card mini"
+                            style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200);">
+                            <div class="stat-label"
+                                style="font-size: 12px; color: var(--text-light); margin-bottom: 5px;">متوسط الحصص/أستاذ
+                            </div>
+                            <div class="stat-value" id="analysis-avg-sessions"
+                                style="font-size: 20px; font-weight: 700; color: var(--primary);">0</div>
+                        </div>
+                        <div class="stat-card mini"
+                            style="background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200);">
+                            <div class="stat-label"
+                                style="font-size: 12px; color: var(--text-light); margin-bottom: 5px;">متوسط
+                                الساعات/أستاذ</div>
+                            <div class="stat-value" id="analysis-avg-hours"
+                                style="font-size: 20px; font-weight: 700; color: var(--primary);">0</div>
+                        </div>
+                    </div>
+                    <div id="availability-status"
+                        style="margin-top: 20px; padding: 15px; border-radius: 8px; font-size: 14px;">
+                        <!-- Will be updated by JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="card fade-in" id="schedule-result" style="display:none;">
+                <div id="schedule-content"></div>
+            </div>
+        </section>
+
+        <!-- Page: CV -->
+        <section class="page" id="page-cv">
+            <div class="page-header" style="text-align: center;">
+                <div style="margin-bottom: 15px;">
+                    <img src="profile.png" alt="صورة المصمم"
+                        style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px rgba(26,86,219,0.3);">
+                </div>
+                <h2 class="page-title" style="justify-content: center;">
+                    <span class="title-icon">📄</span>
+                    نبذة عن مصمم البرنامج
+                </h2>
+                <p class="page-subtitle" style="padding-right: 0;">برنامج جدول الحراسة — تصميم وتطوير</p>
+                <div
+                    style="margin-top: 15px; display: inline-flex; align-items: center; gap: 15px; background: var(--primary-50); padding: 12px 24px; border-radius: var(--radius); border: 1px solid var(--primary-200);">
+                    <div style="text-align: right;">
+                        <p style="font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px;">العربي
+                            جلال</p>
+                        <p style="font-size: 13px; color: var(--text-secondary);">📧 <a href="mailto:lardja86@gmail.com"
+                                style="color: var(--primary); text-decoration: none;">lardja86@gmail.com</a></p>
+                        <p style="font-size: 12px; color: var(--text-light); margin-top: 4px;">لأي اقتراحات أو ملاحظات،
+                            لا تتردد في التواصل</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="card-header">
+                    <h3>📌 الخبرات المهنية</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">الفترة</th>
+                                <th>المنصب</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>14 فيفري 2022 – إلى يومنا هذا</strong></td>
+                                <td>رئيس لجنة التربية والتعليم العالي والتكوين المهني<br><small
+                                        style="color:var(--text-secondary)">المجلس الشعبي الولائي لولاية غليزان</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 نوفمبر 2021 – 13 فيفري 2022</strong></td>
+                                <td>ناظر ثانوية<br><small style="color:var(--text-secondary)">ثانوية بن جامعة محمد — عين
+                                        طارق</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>24 جوان 2021 – 01 نوفمبر 2021</strong></td>
+                                <td>مكلف بمهام الأمين العام<br><small style="color:var(--text-secondary)">مديرية التربية
+                                        لولاية غليزان</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 سبتمبر 2018 – 23 جوان 2021</strong></td>
+                                <td>رئيس مكتب التعليم الثانوي العام والتكنولوجي<br><small
+                                        style="color:var(--text-secondary)">مصلحة الدراسة والامتحانات — مديرية التربية
+                                        لولاية غليزان</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 سبتمبر 2016 – 01 سبتمبر 2018</strong></td>
+                                <td>ناظر ثانوية<br><small style="color:var(--text-secondary)">ثانوية حجار محمد — عين
+                                        طارق</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 سبتمبر 2010 – 01 سبتمبر 2016</strong></td>
+                                <td>أستاذ تعليم ثانوي — مادة الهندسة الكهربائية<br><small
+                                        style="color:var(--text-secondary)">ثانوية أولاد يعيش</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="card-header">
+                    <h3>🎓 المؤهلات العلمية</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">السنة</th>
+                                <th>الشهادة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>2010</strong></td>
+                                <td>مهندس دولة إلكترونيك — تخصص تجهيزات<br><small
+                                        style="color:var(--text-secondary)">جامعة العلوم والتكنولوجيا هواري بومدين —
+                                        وهران</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2004</strong></td>
+                                <td>بكالوريا شعبة هندسة كهربائية<br><small style="color:var(--text-secondary)">متقن
+                                        هواري بومدين</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card fade-in">
+                <div class="card-header">
+                    <h3>💼 خبرات العمل</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">الفترة</th>
+                                <th>التفاصيل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>02 سبتمبر 2018 – 23 جوان 2021</strong></td>
+                                <td>عضو خلية التنشيط والمتابعة (الامتحانات المدرسية)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>جانفي 2019 – 15 جانفي 2019</strong></td>
+                                <td>تكوين بخصوص ربط المؤسسات عن طريق القمر الصناعي ALCOMSAT<br><small
+                                        style="color:var(--text-secondary)">المعهد الوطني بن آشنهو — وهران</small></td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 سبتمبر 2016 – 01 سبتمبر 2018</strong></td>
+                                <td>أستاذ مادة المعلوماتية لفائدة الأساتذة المتكونين<br><small
+                                        style="color:var(--text-secondary)">تحت إشراف مصلحة التكوين والتفتيش</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>02 جويلية 2008 – 01 أوت 2008</strong></td>
+                                <td>تكوين في اختصاص مهندس دولة إلكترونيك<br><small
+                                        style="color:var(--text-secondary)">SRGA - SONATRACH</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div
+                style="text-align: center; margin-top: 20px; padding: 15px; color: var(--text-light); font-size: 13px;">
+                <p>تم تصميم وتطوير هذا البرنامج لتسهيل عملية إعداد جداول حراسة الامتحانات بالمؤسسات التعليمية</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Print Preview Modal -->
+    <div id="print-preview-modal" class="modal">
+        <div class="modal-content"
+            style="width:95%; height:95%; max-width:1200px; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <h3>🔍 معاينة قبل الطباعة</h3>
+                <div style="display: flex; gap: 10px;">
+                    <button id="final-print-btn" class="btn btn-primary">
+                        <span>🖨️</span> طباعة الآن
+                    </button>
+                    <button class="close-modal">✕</button>
+                </div>
+            </div>
+            <div class="modal-body" style="flex: 1; padding:0; overflow: hidden; background: #525659;">
+                <iframe id="print-preview-frame" style="width:100%; height:100%; border:none;"></iframe>
+            </div>
+            <div class="modal-footer"
+                style="padding:15px; border-top:1px solid var(--border-light); display:flex; gap:15px; justify-content:center;">
+                <button class="btn btn-secondary" onclick="closeModal('print-preview-modal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Assignment Modal -->
+    <div class="modal" id="edit-assignment-modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>✏️ تعديل توزيع الحراس</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="edit-session-header-info"
+                    style="margin-bottom: 15px; padding: 12px; background: var(--primary-50); border-radius: var(--radius-sm); border: 1px solid var(--primary-100);">
+                    <!-- Day/Period info -->
+                </div>
+
+                <div id="edit-rooms-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Rooms and Guards list will be rendered here -->
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 12px;">
+                    <button class="btn btn-primary" id="save-all-edits-btn" style="flex: 2;">💾 حفظ جميع
+                        التغييرات</button>
+                    <button class="btn btn-outline close-modal" style="flex: 1;">إلغاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Area -->
+    <div id="print-area" class="print-area"></div>
+
+    <!-- Auto-Updater Modal -->
+    <div class="modal" id="updater-modal" style="z-index: 10000; background: rgba(0,0,0,0.85);">
+        <div class="modal-content" style="max-width: 400px; text-align: center; border: 2px solid var(--primary);">
+            <div class="modal-header" style="justify-content: center; border-bottom: none;">
+                <h3 style="color: var(--primary);">🔄 تحديث البرنامج</h3>
+            </div>
+            <div class="modal-body">
+                <p id="updater-status-text" style="margin-bottom: 15px; font-weight: 600;">جاري البحث عن تحديثات...</p>
+                <div
+                    style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; height: 16px; width: 100%; overflow: hidden; margin-bottom: 10px;">
+                    <div id="updater-progress-bar"
+                        style="background: var(--primary); width: 0%; height: 100%; transition: width 0.3s;"></div>
+                </div>
+                <p id="updater-percent-text"
+                    style="font-size: 12px; color: var(--text-secondary); margin-bottom: 20px;">0%</p>
+
+                <div id="updater-action-buttons" style="display: none; gap: 10px;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="installUpdate()">تثبيت التحديث الآن وإعادة
+                        التشغيل</button>
+                    <button class="btn btn-outline" style="flex: 1;"
+                        onclick="document.getElementById('updater-modal').classList.remove('active')">تثبيت
+                        لاحقاً</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What's New Modal -->
+    <div class="modal" id="whats-new-modal" style="z-index: 10001; background: rgba(0,0,0,0.85);">
+        <div class="modal-content"
+            style="max-width: 600px; max-height: 90vh; overflow-y: auto; text-align: right; border-top: 4px solid var(--primary);">
+            <div class="modal-header"
+                style="justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light);">
+                <h2 style="color: var(--primary); margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 24px;">🚀</span> ما الجديد في التحديث V3.8.0 ؟
+                </h2>
+                <button class="close-modal"
+                    onclick="document.getElementById('whats-new-modal').classList.remove('active')"
+                    style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-light);">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px 0;">
+                <div
+                    style="background: var(--primary-50); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid var(--primary);">
+                    <h3 style="margin: 0 0 10px 0; color: var(--primary-dark);">✨ أهم الإضافات في الإصدار 3.9.0:</h3>
+
+                    <ul style="list-style-type: none; padding: 0; margin: 0; line-height: 1.6; font-size: 15px;">
+                        <li style="margin-bottom: 12px;">🛡️ <strong>الاحتياط المتخصص حسب المادة:</strong> إمكانية تحديد احتياط لمادة معينة وسيعطي النظام الأولوية لأساتذة تلك المادة آلياً.</li>
+                        <li style="margin-bottom: 12px;">📧 <strong>نظام التنبيهات البريدي:</strong> إضافة بريد المؤسسة لاستقبال إشعارات التحديثات والتحسينات البرمجية.</li>
+                        <li style="margin-bottom: 12px;">🚀 <strong>تنبيهات التحديث التفاعلية:</strong> شريط تنبيه ذكي يظهر فور توفر نسخة جديدة لتحميلها بضغطة زر واحدة.</li>
+                        <li style="margin-bottom: 12px;">📊 <strong>تحسين التوزيع العادل:</strong> تطوير خوارزمية التوزيع لتقليل التكرار وضمان توازن الساعات بين الأساتذة بدقة أعلى.</li>
+                    </ul>
+                </div>
+
+                <div
+                    style="background: #fdf6e3; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #d97706; opacity: 0.8;">
+                    <h4 style="margin: 0 0 10px 0; color: #b45309;">📌 تذكير (الإصدار 3.8.0):</h4>
+                    <ul
+                        style="list-style-type: none; padding: 0; margin: 0; line-height: 1.4; font-size: 13px; color: #78350f;">
+                        <li>• نظام التحديث السريع (Silent Updates) دون إعادة التنصيب.</li>
+                        <li>• الفلترة الذكية للمستويات حسب الفصل الدراسي.</li>
+                        <li>• واجهة ربط القاعات المطورة والربط السريع للأفواج.</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <button class="btn btn-primary btn-lg" style="padding: 10px 30px; font-size: 16px;"
+                        onclick="document.getElementById('whats-new-modal').classList.remove('active')">
+                        رائع! جرب الميزات الجديدة 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Swap Center Modal -->
+    <div id="swap-center-modal" class="modal">
+        <div class="modal-content fade-in" style="max-width: 900px; padding: 0;">
+            <div class="modal-header"
+                style="background: var(--primary); color: white; padding: 20px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 28px;">🔀</span>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.4rem;">مركز طلبات التبادل والتعويض</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.9;">تبادل فترات الحراسة بين الأستاذة
+                            أو نقل مهمة من أستاذ لآخر بضغطة زر</p>
+                    </div>
+                </div>
+                <span class="close" onclick="closeModal('swap-center-modal')"
+                    style="color: white; font-size: 28px; cursor: pointer;">&times;</span>
+            </div>
+
+            <div class="modal-body" style="padding: 25px;">
+                <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch;">
+
+                    <!-- Teacher 1 Side -->
+                    <div class="swap-side-panel"
+                        style="background: var(--gray-50); border: 1px solid var(--border-light); border-radius: 12px; padding: 20px;">
+                        <div style="margin-bottom: 20px;">
+                            <label
+                                style="font-weight: 800; color: var(--primary-dark); display: block; margin-bottom: 8px;">الطرف
+                                الأول (المتنازل):</label>
+                            <select id="swap-teacher1-select" class="form-control"
+                                onchange="renderSwapTeacherDuties(1)">
+                                <option value="">-- اختر الأستاذ الأول --</option>
+                            </select>
+                        </div>
+                        <!-- Duty Cards for Teacher 1 -->
+                        <div id="swap-teacher1-duties"
+                            style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px;">
+                            <div
+                                style="text-align: center; color: var(--text-light); padding: 30px 10px; font-style: italic;">
+                                اختر أستاذاً لعرض فترات حراسته</div>
+                        </div>
+                    </div>
+
+                    <!-- Divider Icon -->
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--primary); opacity: 0.5;">
+                        ⇄
+                    </div>
+
+                    <!-- Teacher 2 Side -->
+                    <div class="swap-side-panel"
+                        style="background: var(--gray-50); border: 1px solid var(--border-light); border-radius: 12px; padding: 20px;">
+                        <div style="margin-bottom: 20px;">
+                            <label
+                                style="font-weight: 800; color: var(--primary-dark); display: block; margin-bottom: 8px;">الطرف
+                                الثاني (البديل):</label>
+                            <select id="swap-teacher2-select" class="form-control"
+                                onchange="renderSwapTeacherDuties(2)">
+                                <option value="">-- اختر الأستاذ الثاني --</option>
+                            </select>
+                        </div>
+                        <!-- Duty Cards for Teacher 2 -->
+                        <div id="swap-teacher2-duties"
+                            style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 5px;">
+                            <div
+                                style="text-align: center; color: var(--text-light); padding: 30px 10px; font-style: italic;">
+                                اختر أستاذاً لعرض فترات حراسته</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="swap-status-message"
+                    style="margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; display: none;">
+                </div>
+            </div>
+
+            <div class="modal-footer"
+                style="padding: 20px 25px; background: var(--gray-100); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 12px 12px;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                    <span style="color: var(--primary);">💡</span>
+                    حدد فترة مسؤولة من الطرف الأول، وفترة (اختيارية) من الطرف الثاني لتنفيذ التبديل المزدوج.
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn btn-outline" onclick="closeModal('swap-center-modal')">إلغاء</button>
+                    <button class="btn btn-primary" id="execute-swap-btn" onclick="executeGlobalSwap()" disabled
+                        style="padding: 10px 25px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);">
+                        تنفيذ الطلب
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Session Editor Modal -->
+    <div id="session-editor-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header"
+                style="background: var(--primary); color: white; border-radius: 12px 12px 0 0; padding: 15px 25px;">
+                <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <span>📝</span> تعديل تفاصيل الفترة
+                </h2>
+                <span class="close-button" onclick="closeModal('session-editor-modal')"
+                    style="color: white; opacity: 0.8;">&times;</span>
+            </div>
+            <div id="session-editor-body" class="modal-body" style="padding: 25px;">
+                <!-- Content injected by JS -->
+            </div>
+            <div class="modal-footer"
+                style="padding: 15px 25px; background: var(--gray-50); border-top: 1px solid var(--border); border-radius: 0 0 12px 12px; text-align: left;">
+                <button class="btn btn-secondary" onclick="closeModal('session-editor-modal')">إغلاق</button>
+            </div>
+        </div>
+    </div>
+    <!-- Room Linking Modal -->
+    <div id="room-linking-modal" class="modal">
+        <div class="modal-content"
+            style="max-width: 800px; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: 20px 25px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 24px;">🔗</span>
+                    <div>
+                        <h2 id="room-linking-title" style="margin: 0; font-size: 1.25rem; font-weight: 800;">ربط القاعة</h2>
+                        <p id="room-linking-subtitle" style="margin: 0; font-size: 0.85rem; opacity: 0.9; font-weight: 500;">
+                            اختر القسم التربوي المناسب لهذه القاعة</p>
+                    </div>
+                </div>
+                <span class="close-button" onclick="closeModal('room-linking-modal')"
+                    style="color: white; font-size: 30px; cursor: pointer; line-height: 1;">&times;</span>
+            </div>
+            <div class="modal-body" style="padding: 0; background: #f8fafc;">
+                <!-- Search and Filter Bar -->
+                <div
+                    style="padding: 15px 25px; background: white; border-bottom: 1px solid var(--border-light); display: flex; gap: 15px; align-items: center;">
+                    <div style="flex: 1; position: relative;">
+                        <span
+                            style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text-light);">🔍</span>
+                        <input type="text" id="group-search-input" placeholder="بحث عن قسم..." class="form-control"
+                            style="padding-right: 35px; border-radius: 10px; border: 1.5px solid var(--gray-200); font-weight: 600;"
+                            oninput="filterGroupsInPalette()">
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="assignGroupToRoomFromModal('')"
+                        style="color: var(--danger); border-color: var(--danger-light); padding: 8px 15px; font-weight: 800;">
+                        <span>🧹</span> تفريغ القاعة
+                    </button>
+                </div>
+                <!-- Selection Grid -->
+                <div id="room-linking-body" style="padding: 20px 25px; max-height: 450px; overflow-y: auto;">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+            <div class="modal-footer"
+                style="padding: 15px 25px; background: white; border-top: 1px solid var(--border-light); text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.8rem; color: var(--text-light); font-weight: 600;">
+                    💡 تلميح: سيتم الانتقال تلقائياً للقاعة التالية بعد الربط.
+                </div>
+                <button class="btn btn-secondary" onclick="closeModal('room-linking-modal')"
+                    style="border-radius: 8px; font-weight: 700;">إغلاق</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

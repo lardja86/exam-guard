@@ -1,0 +1,19 @@
+{
+  "version": "3.9.0",
+  "releaseDate": "2026-04-02",
+  "description": "تحديث الإصدار 3.9.0: الاحتياط حسب المادة، إيميل المؤسسة، ونظام تنبيهات ذكي.",
+  "files": [
+    {
+      "name": "app.js",
+      "url": "https://raw.githubusercontent.com/lardja86/exam-guard/main/app.js"
+    },
+    {
+      "name": "index.html",
+      "url": "https://raw.githubusercontent.com/lardja86/exam-guard/main/index.html"
+    },
+    {
+      "name": "style.css",
+      "url": "https://raw.githubusercontent.com/lardja86/exam-guard/main/style.css"
+    }
+  ]
+}
